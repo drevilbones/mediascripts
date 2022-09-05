@@ -2,7 +2,7 @@
 
 OUTPUT_DIR="/mnt/big/incoming"
 SOURCE_DRIVE="/dev/sr0"
-HANDBRAKE_PRESET="H.264 MKV 480p30"
+HANDBRAKE_PRESET="HQ 480p30 Surround"
 EXTENSION="mkv"
 
 if [ $# -lt 3 ]; then
@@ -35,21 +35,15 @@ do
 	if [[ $titlenum == $mainfeat ]]; then
 		continue
 	fi	
-	HandBrakeCLI HandBrakeCLI -i $OUTPUT_DIR/$DVD_TITLE \
-		--title $titlenum -o "$OUTPUT_DIR/$DVD_TITLE-S${SEASON}T${titlenum}.$EXTENSION" \
+	HandBrakeCLI -i $OUTPUT_DIR/$DVD_TITLE \
+		--title $titlenum --min-duration 300 \
+		-o "$OUTPUT_DIR/$DVD_TITLE-S${SEASON}T${titlenum}.$EXTENSION" \
 		--preset="$HANDBRAKE_PRESET" -N eng --subtitle-burned=none
 done
 
 # Clean up
 cd $OUTPUT_DIR
-for file in *.mkv
-do
-	echo -n "$EPINDEX: "
-	newname="$(echo $file | sed s/T[0-9]/E$EPINDEX/)"
-	echo "$file -> $newname"
-	mv "$file" "$newname"
-	let "++EPINDEX"
-done
+# Delete raw DVD output
 rm -R $DVD_TITLE/
 
 #Done
