@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTPUT_DIR="/mnt/big/incoming"
+OUTPUT_DIR="/big/incoming"
 SOURCE_DRIVE="/dev/sr0"
 HANDBRAKE_PRESET="HQ 480p30 Surround"
 EXTENSION="mkv"
