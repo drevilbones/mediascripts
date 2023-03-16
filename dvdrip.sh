@@ -2,7 +2,8 @@
 
 OUTPUT_DIR="/big/incoming"
 SOURCE_DRIVE="/dev/sr0"
-HANDBRAKE_PRESET="HQ 720p30 Surround"
+HANDBRAKE_PRESET="Good DVDs"
+PRESET_FILE="DVD.json"
 EXTENSION="mkv"
 
 function rip_dvd() {
@@ -16,7 +17,7 @@ function rip_dvd() {
 	dvdbackup -i $SOURCE_DRIVE -o $OUTPUT_DIR -M -n $DVD_TITLE
 
 	# And now we can start encoding
-	HandBrakeCLI -i $OUTPUT_DIR/$DVD_TITLE -o $OUTPUT_DIR/$DVD_TITLE.$EXTENSION --preset="$HANDBRAKE_PRESET" --main-feature --markers -N eng --subtitle-burned=none
+	HandBrakeCLI -i $OUTPUT_DIR/$DVD_TITLE -o $OUTPUT_DIR/$DVD_TITLE.$EXTENSION --preset-import-file "$PRESET_FILE" --preset="$HANDBRAKE_PRESET" --markers --min-duration 60 -N eng --subtitle-burned=none
 
 	# Clean up
 	cd $OUTPUT_DIR
