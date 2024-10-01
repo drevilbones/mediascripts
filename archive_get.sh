@@ -35,6 +35,7 @@ print_usage() {
 	echo "<options> are one of the following:"
 	echo "  -e: edit the download list in vim after generating it"
 	echo "  -f [format]: only download files of the given format"
+	echo "  -lf: list formats available and exit"
 	echo "  -d: don't keep directory structure, just dump everything in one folder"
 	echo "  -k: keep the usual internet archive metadata files (xml, sqlite, __ia_thumb.jpg, etc)"
 	echo "      otherwise they get skipped when downloading"
@@ -54,6 +55,10 @@ if [ $# -gt 1 ]; then
 				;;
 			-e)
 				editlist=y
+				;;
+			-lf)
+				ia metadata --formats "$arname"
+				exit
 				;;
 			-f) 
 				onlyfiles=y
